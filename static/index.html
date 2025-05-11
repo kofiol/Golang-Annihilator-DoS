@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hackery CLI - Web</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00ffff;
+            font-family: monospace;
+            text-align: center;
+            padding-top: 50px;
+        }
+        h1 { color: #ff4444; }
+        input, button {
+            background-color: #111;
+            color: #ff4444;
+            border: 2px solid #ff4444;
+            font-size: 1.2em;
+            padding: 10px;
+            margin: 10px;
+        }
+        #status { color: #00ff00; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+<f1>
+GOLANG ANNIHILATOR v1
+                                                                                                                                                     
+</f1>
+    <input type="password" id="pin" placeholder="PIN"><br>
+    <input type="text" id="target_url" placeholder="Target URL (e.g., https://example.com)"><br>
+    <button onclick="start()">START</button>
+    <pre id="status"></pre>
+    <script>
+        async function start() {
+            const pin = document.getElementById('pin').value;
+            const targetURL = document.getElementById('target_url').value;
+            if (!targetURL) {
+                document.getElementById('status').textContent = "Please provide a target URL.";
+                return;
+            }
+            const res = await fetch('/run', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pin, target_url: targetURL })
+            });
+            document.getElementById('status').textContent = await res.text();
+        }
+    </script>
+</body>
+</html>
